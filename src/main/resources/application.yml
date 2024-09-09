@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/seu_banco_de_dados
+    username: teste
+    password: teste
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
