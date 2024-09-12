@@ -20,6 +20,9 @@ public class Product {
 
     // CONSTRUCTOR  --------------------------------------------------------
 
+    public Product(){
+    }
+
     public Product(int productId, String name, String image, String productUrl) {
         this.productId = productId;
         this.name = name;
