@@ -5,11 +5,11 @@ services:
     image: postgres:16
     container_name: PostGresDB
     environment:
-      POSTGRES_NAME: eren
+      POSTGRES_USER: eren
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: bermali
     volumes:
-      - database:/var/lib/postgres/data
+      - database:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
