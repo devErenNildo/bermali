@@ -1,6 +1,6 @@
 package com.bermali.domain.product;
 
-public class DtoProductRequest {
+public class ProductRequestDTO {
     private int productId;
     private String name;
     private String image;

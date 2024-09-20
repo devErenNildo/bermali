@@ -1,6 +1,6 @@
 package com.bermali.controller;
 
-import com.bermali.domain.product.DtoProductRequest;
+import com.bermali.domain.product.ProductRequestDTO;
 import com.bermali.domain.product.Product;
 import com.bermali.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Product> saveProduct(@RequestBody DtoProductRequest productRequest){
+    public ResponseEntity<Product> saveProduct(@RequestBody ProductRequestDTO productRequest){
 
         Product product = new Product(
                 productRequest.getProductId(),
