@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
+
 @Service
 public class AuthService {
 
@@ -36,6 +39,7 @@ public class AuthService {
         Algorithm algorithm = Algorithm.HMAC256(algorithmKey);
 
         var token = JWT.create().withIssuer("bermali")
+                .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))
                 .withSubject(admin.getId().toString())
                 .sign(algorithm);
         return token;
