@@ -22,10 +22,10 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         SecurityContextHolder.getContext().setAuthentication(null);
-        String header = request.getHeader("Authorization");
+        var token = this.recoverToken(request);
 
-        if(header != null){
-            var subjectToken = jwtProvider.validateToken(header);
+        if(token != null){
+            var subjectToken = jwtProvider.validateToken(token);
             if(subjectToken != null){
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
@@ -36,5 +36,11 @@ public class SecurityFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private String recoverToken(HttpServletRequest request) {
+        var authHeader = request.getHeader("Authorization");
+        if (authHeader == null) return null;
+        return authHeader.replace("Bearer ", "");
     }
 }
