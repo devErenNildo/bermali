@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.bermali.domain.admin.Admin;
 import com.bermali.domain.admin.AuthAdminDTO;
 import com.bermali.repositories.AdminRepository;
+import com.bermali.security.JWTProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
@@ -25,14 +26,15 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JWTProvider jwtProvider;
+
     @Value("${algorithm.key}")
     private String algorithmKey;
 
     public String execute(AuthAdminDTO authAdminDTO) throws AuthenticationException {
         var admin = adminRepository.findByEmail(authAdminDTO.getEmail()).orElseThrow(
-            ()-> {
-                throw new UsernameNotFoundException("User not found");
-            }
+            ()-> new UsernameNotFoundException("User not found")
         );
 
         var passwordMatches = passwordEncoder.matches(authAdminDTO.getPassword(), admin.getPassword());
@@ -40,13 +42,6 @@ public class AuthService {
         if(!passwordMatches){
             throw new RuntimeException("Password does not match");
         }
-
-        Algorithm algorithm = Algorithm.HMAC256(algorithmKey);
-        var token = JWT.create()
-                .withIssuer("bermali")
-                .withExpiresAt(Instant.now().plus(Duration.ofHours(4)))
-                .withSubject(admin.getId().toString())
-                .sign(algorithm);
-        return token;
+        return jwtProvider.generateToken(admin);
     }
 }
