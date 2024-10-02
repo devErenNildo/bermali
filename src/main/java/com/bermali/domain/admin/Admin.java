@@ -1,14 +1,20 @@
 package com.bermali.domain.admin;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class Admin {
+public class Admin implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -16,6 +22,7 @@ public class Admin {
     private String name;
     private String email;
     private String password;
+    private Roles role;
 
     // CONSTRUCTOR  --------------------------------------------------------
 
@@ -60,5 +67,18 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    // GETTERS AND SETTERS -------------------------------------------------
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
+    }
+
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 }
