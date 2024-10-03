@@ -1,6 +1,8 @@
 package com.bermali.controller;
 
+import com.bermali.domain.admin.AdminRequestDTO;
 import com.bermali.domain.admin.AuthAdminDTO;
+import com.bermali.services.AdminService;
 import com.bermali.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,10 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @PostMapping
+    @Autowired
+    private AdminService adminService;
+
+    @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody AuthAdminDTO authAdminDTO) {
         try{
             var result= this.authService.execute(authAdminDTO);
@@ -26,6 +31,10 @@ public class AuthController {
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
+    }
 
+    @PostMapping("/create")
+    public ResponseEntity<String> register (@RequestBody AdminRequestDTO adminRequestDTO) {
+        return ResponseEntity.ok(adminService.createAdmin(adminRequestDTO));
     }
 }

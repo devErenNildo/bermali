@@ -1,5 +1,6 @@
 package com.bermali.services;
 
+import com.bermali.domain.admin.AdminRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,14 @@ public class AdminService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	public Admin createAdmin(Admin admin) {
+	public String createAdmin(AdminRequestDTO adminRequestDTO) {
+		Admin admin = new Admin(
+				adminRequestDTO.getName(),
+				adminRequestDTO.getEmail(),
+				passwordEncoder.encode(adminRequestDTO.getPassword())
+		);
 
-		var password = passwordEncoder.encode(admin.getPassword());
-		admin.setPassword(password);
-		return adminRepository.save(admin);
+		return "order sent, wait for administrator confirmation";
 	}
 	
 }

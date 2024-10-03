@@ -2,7 +2,6 @@ package com.bermali.domain.admin;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
@@ -33,6 +32,7 @@ public class Admin implements UserDetails {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = Roles.ROLE_USER;
     }
 
     // GETTERS AND SETTERS -------------------------------------------------
