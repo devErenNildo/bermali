@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.bermali.domain.admin.Admin;
 import com.bermali.repositories.AdminRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminService {
@@ -20,7 +23,6 @@ public class AdminService {
 	private PasswordEncoder passwordEncoder;
 	
 	public Admin createAdmin(Admin admin) {
-
 		var password = passwordEncoder.encode(admin.getPassword());
 		admin.setPassword(password);
 		return adminRepository.save(admin);
@@ -33,6 +35,14 @@ public class AdminService {
 		admin.setRole(Role.ROLE_ADMIN);
 
 		return adminRepository.save(admin);
+	}
+
+	public List<Admin> findAllAdminsPending() {
+		List<Admin> admins = adminRepository.findAll().stream()
+				.filter(user -> user.getRole() == Role.ROLE_USER)
+				.toList();
+
+		return admins;
 	}
 	
 }
