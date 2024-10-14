@@ -32,7 +32,7 @@ public class Admin implements UserDetails {
         this.name = name;
         this.login = email;
         this.password = password;
-        this.role = Role.USER;
+        this.role = Role.ROLE_USER;
     }
 
     // GETTERS AND SETTERS -------------------------------------------------
@@ -69,6 +69,13 @@ public class Admin implements UserDetails {
         this.password = password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
     // IMPLEMENT USERDETAILS -------------------------------------------------
 
     @Override

@@ -1,7 +1,7 @@
 package com.bermali.domain.admin;
 
 public enum Role {
-    USER,
-    ADMIN,
-    MANAGER
+    ROLE_USER,
+    ROLE_ADMIN,
+    ROLE_MANAGER;
 }
