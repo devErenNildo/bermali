@@ -1,21 +1,27 @@
 package com.bermali.domain.admin;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class Admin {
+public class Admin implements UserDetails {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
-    private String email;
+    private String login;
     private String password;
+    private Role role;
 
     // CONSTRUCTOR  --------------------------------------------------------
 
@@ -24,8 +30,9 @@ public class Admin {
 
     public Admin(String name, String email, String password) {
         this.name = name;
-        this.email = email;
+        this.login = email;
         this.password = password;
+        this.role = Role.USER;
     }
 
     // GETTERS AND SETTERS -------------------------------------------------
@@ -46,12 +53,12 @@ public class Admin {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String email) {
+        this.login = email;
     }
 
     public String getPassword() {
@@ -60,5 +67,17 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    // IMPLEMENT USERDETAILS -------------------------------------------------
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
     }
 }
