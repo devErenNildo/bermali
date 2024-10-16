@@ -44,5 +44,12 @@ public class AdminService {
 
 		return admins;
 	}
-	
+
+	public List<Admin> findAllAdminsAccepted() {
+		List<Admin> admins = adminRepository.findAll().stream()
+				.filter(user -> user.getRole() == Role.ROLE_ADMIN)
+				.toList();
+
+		return admins;
+	}
 }

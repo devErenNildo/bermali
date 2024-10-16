@@ -25,4 +25,9 @@ public class ManagerController {
     public ResponseEntity<List<Admin>> getUsersPending() {
         return ResponseEntity.ok(adminService.findAllAdminsPending());
     }
+
+    @GetMapping("/getAdmins")
+    public ResponseEntity<List<Admin>> getAdmins() {
+        return ResponseEntity.ok(adminService.findAllAdminsAccepted());
+    }
 }
