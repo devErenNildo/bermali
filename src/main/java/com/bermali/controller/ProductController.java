@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/product")
@@ -20,7 +21,6 @@ public class ProductController {
     public ResponseEntity<Product> saveProduct(@RequestBody ProductRequestDTO productRequest){
 
         Product product = new Product(
-                productRequest.getProductId(),
                 productRequest.getName(),
                 productRequest.getImage(),
                 productRequest.getProductUrl()
@@ -32,5 +32,10 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts(){
         return ResponseEntity.ok(productService.findAllProducts());
+    }
+
+    @GetMapping("/delete")
+    public ResponseEntity<String> deleteProduct(@RequestParam UUID id){
+        return ResponseEntity.ok(productService.deleteProduct(id));
     }
 }

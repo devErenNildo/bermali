@@ -13,7 +13,6 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private int productId;
     private String name;
     private String image;
     private String productUrl;
@@ -23,8 +22,7 @@ public class Product {
     public Product(){
     }
 
-    public Product(int productId, String name, String image, String productUrl) {
-        this.productId = productId;
+    public Product(String name, String image, String productUrl) {
         this.name = name;
         this.image = image;
         this.productUrl = productUrl;
@@ -39,14 +37,6 @@ public class Product {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
     }
 
     public String getName() {
