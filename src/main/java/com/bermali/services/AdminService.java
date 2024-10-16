@@ -38,18 +38,20 @@ public class AdminService {
 	}
 
 	public List<Admin> findAllAdminsPending() {
-		List<Admin> admins = adminRepository.findAll().stream()
-				.filter(user -> user.getRole() == Role.ROLE_USER)
-				.toList();
 
-		return admins;
+        return adminRepository.findAll().stream()
+                .filter(user -> user.getRole() == Role.ROLE_USER)
+                .toList();
 	}
 
 	public List<Admin> findAllAdminsAccepted() {
-		List<Admin> admins = adminRepository.findAll().stream()
+		return adminRepository.findAll().stream()
 				.filter(user -> user.getRole() == Role.ROLE_ADMIN)
 				.toList();
+	}
 
-		return admins;
+	public String deleteAdmin(UUID id) {
+		adminRepository.deleteById(id);
+		return "Admin deleted";
 	}
 }

@@ -30,4 +30,9 @@ public class ManagerController {
     public ResponseEntity<List<Admin>> getAdmins() {
         return ResponseEntity.ok(adminService.findAllAdminsAccepted());
     }
+
+    @GetMapping("/getAdmins")
+    public ResponseEntity<String> deleteAdmin(@RequestParam UUID id) {
+        return ResponseEntity.ok(adminService.deleteAdmin(id));
+    }
 }
